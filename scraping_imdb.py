@@ -1,8 +1,8 @@
 import requests
 import bs4
-rec = requests.get('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNO'+
-	'QJNL&pf_rd_p=e31d89dd-322d-4646-8962-327b42fe94b1&pf_rd_r=QGSH8PWCFZMYZZ6JJGDX&p'+
-	'f_rd_s=center-1&pf_rd_t=15506&pf_rd_i=top&ref_=chttp_tt_8')
+rec = requests.get('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=e31d89dd' + 
+	'-322d-4646-8962-327b42fe94b1&pf_rd_r=QGSH8PWCFZMYZZ6JJGDX&pf_rd_s=center-1&pf_rd_t=15506&pf_' + 
+	'rd_i=top&ref_=chttp_tt_8')
 soup = bs4.BeautifulSoup(rec.content,'html.parser') 
 # rec.content = rec.text
 
@@ -23,6 +23,16 @@ for link in s4.find_all('a'):
 	genres.append(link.string)
 genres.pop()
 print(genres)
+
+s5 = soup.find('div', class_='ratings_wrapper')
+# print(s5)
+
+s6 = soup.find('span', itemprop='ratingValue')
+ratingValue = s6.string
+s7 = soup.find('span', itemprop='ratingCount')
+ratingCount = s7.string
+print(ratingValue)
+print(ratingCount)
 
 # <div class="title_wrapper">
 # <h1 class="">Pulp Fiction&nbsp;<span id="titleYear">(<a href="/year/1994/?ref_=tt_ov_inf">1994</a>)</span></h1>
