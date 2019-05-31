@@ -5,7 +5,7 @@ rec = requests.get('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNOQJNL
 	'rd_i=top&ref_=chttp_tt_8')
 Main_Soup = bs4.BeautifulSoup(rec.content,'html.parser') 
 # rec.content = rec.text
-
+print(Main_Soup.find('a', title='See more release dates').string)
 def get_movie_name(soup):
 	s1 = soup.div.h1
 	return s1.contents[0]
@@ -30,7 +30,7 @@ def get_rating_value(soup):
 	return s5.string
 def get_rating_count(soup):	
 	s6 = soup.find('span', itemprop='ratingCount')
-	return s6.string
+	return s6.string.replace(",","")
 
 def get_summary(soup):
 	s7 = soup.find('div', class_='summary_text')
@@ -65,5 +65,4 @@ def print_all(soup):
 	print(get_restriction_age(soup))
 
 
-
-
+# ratingNum=print(float(get_rating_value(Main_Soup)) * int(get_rating_count(Main_Soup)))
