@@ -3,68 +3,67 @@ import bs4
 rec = requests.get('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=e31d89dd' + 
 	'-322d-4646-8962-327b42fe94b1&pf_rd_r=QGSH8PWCFZMYZZ6JJGDX&pf_rd_s=center-1&pf_rd_t=15506&pf_' + 
 	'rd_i=top&ref_=chttp_tt_8')
-soup = bs4.BeautifulSoup(rec.content,'html.parser') 
+Main_Soup = bs4.BeautifulSoup(rec.content,'html.parser') 
 # rec.content = rec.text
 
-s1 = soup.div.h1
-movie_name = s1.contents[0]
-# print(movie_name)
+def get_movie_name(soup):
+	s1 = soup.div.h1
+	return s1.contents[0]
 
-year = soup.div.h1.a.contents[0]
-# print(year)
+def get_year(soup):
+	return soup.div.h1.a.contents[0]
 
-s3 = soup.div.time.string
-duration = s3.strip()
-# print(duration)
+def get_duration(soup):
+	s3 = soup.div.time.string
+	return s3.strip()
 
-s4=soup.find('div', class_='subtext')
-genres=[]
-for link in s4.find_all('a'):
-	genres.append(link.string)
-genres.pop()
-# print(genres)
+def get_genres(soup):
+	s4=soup.find('div', class_='subtext')
+	genres=[]
+	for link in s4.find_all('a'):
+		genres.append(link.string)
+	genres.pop()
+	return genres
 
-s5 = soup.find('span', itemprop='ratingValue')
-ratingValue = s5.string
-s6 = soup.find('span', itemprop='ratingCount')
-ratingCount = s6.string
-# print(ratingValue)
-# print(ratingCount)
+def get_rating_value(soup):
+	s5 = soup.find('span', itemprop='ratingValue')
+	return s5.string
+def get_rating_count(soup):	
+	s6 = soup.find('span', itemprop='ratingCount')
+	return s6.string
 
-# <div class="title_wrapper">
-# <h1 class="">Pulp Fiction&nbsp;<span id="titleYear">(<a href="/year/1994/?ref_=tt_ov_inf">1994</a>)</span></h1>
-#             <div class="subtext">
-#                     18
-#     <span class="ghost">|</span>
-#                     <time datetime="PT154M">	                    
-#                         2h 34min
-#                     </time>
-#     <span class="ghost">|</span>
-# 			    <a href="/search/title?genres=crime&amp;explore=title_type,genres&amp;ref_=tt_ov_inf">Crime</a>, 
-# 			    <a href="/search/title?genres=drama&amp;explore=title_type,genres&amp;ref_=tt_ov_inf">Drama</a>
-#     <span class="ghost">|</span>
-# 			    <a href="/title/tt0110912/releaseinfo?ref_=tt_ov_inf" title="See more release dates">13 January 1995 (Spain)</a>
-#             </div>
-# </div>
+def get_summary(soup):
+	s7 = soup.find('div', class_='summary_text')
+	return s7.string.strip()
 
-s7 = soup.find('div', class_='summary_text')
-summary = s7.string.strip()
-# print(summary)
+def get_director(soup):
+	s8 = soup.find_all('div', class_='credit_summary_item')
+	return s8[0].find('a').string
 
-s8 = soup.find_all('div', class_='credit_summary_item')
-director=s8[0].find('a').string
-# print(director)
+def get_actors(soup):
+	s8 = soup.find_all('div', class_='credit_summary_item')	
+	actors=[]
+	for link in s8[2].find_all('a'):
+		actors.append(link.string)
+	actors.pop()
+	return actors
 
-actors=[]
-for link in s8[2].find_all('a'):
-	actors.append(link.string)
-actors.pop()
-# print(actors)
+def get_restriction_age(soup):
+	s9 = soup.find('div', class_='title_wrapper')
+	return s9.div.contents[0].strip()
 
-s9 = soup.find('div', class_='title_wrapper')
-restriction = s9.div.contents[0].strip()
-print(restriction)
-# R: restricted, parents company needed (United States)
-# A: Suitable for all viewers ("apta") (Spain)
+def print_all(soup):
+	print(get_movie_name(soup))
+	print(get_year(soup))
+	print(get_duration(soup))
+	print(get_genres(soup))
+	print(get_rating_value(soup))
+	print(get_rating_count(soup))
+	print(get_summary(soup))
+	print(get_director(soup))
+	print(get_actors(soup))
+	print(get_restriction_age(soup))
+
+
 
 
