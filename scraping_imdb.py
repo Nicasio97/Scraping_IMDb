@@ -1,14 +1,6 @@
-import requests
-import bs4
-rec = requests.get('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=e31d89dd' + 
-	'-322d-4646-8962-327b42fe94b1&pf_rd_r=QGSH8PWCFZMYZZ6JJGDX&pf_rd_s=center-1&pf_rd_t=15506&pf_' + 
-	'rd_i=top&ref_=chttp_tt_8')
-Main_Soup = bs4.BeautifulSoup(rec.content,'html.parser') 
-# rec.content = rec.text
-print(Main_Soup.find('a', title='See more release dates').string)
 def get_movie_name(soup):
 	s1 = soup.div.h1
-	return s1.contents[0]
+	return s1.contents[0].strip()
 
 def get_year(soup):
 	return soup.div.h1.a.contents[0]
@@ -52,6 +44,9 @@ def get_restriction_age(soup):
 	s9 = soup.find('div', class_='title_wrapper')
 	return s9.div.contents[0].strip()
 
+def get_release_date(soup):
+	return soup.find('a', title='See more release dates').string
+
 def print_all(soup):
 	print(get_movie_name(soup))
 	print(get_year(soup))
@@ -65,4 +60,3 @@ def print_all(soup):
 	print(get_restriction_age(soup))
 
 
-# ratingNum=print(float(get_rating_value(Main_Soup)) * int(get_rating_count(Main_Soup)))
