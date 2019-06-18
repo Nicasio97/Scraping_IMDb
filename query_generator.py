@@ -18,9 +18,18 @@ def insert_movie(soup):
 	AgeRestriction	= scraping_imdb.get_restriction_age(soup)
 	RatingCount	= int(scraping_imdb.get_rating_count(soup))
 	RatingSum	= Rating * RatingCount
-	query1 = "INSERT INTO Movie (Name,Description,Cast,Director,Category,ReleaseDate,Rating,RunningTime, AgeRestriction,RatingCount,RatingSum)"
-	query2 = "VALUES ('"+Name+"','"+Description+"','SACAR','"+Director+"','"+Category+"','"+ReleaseDate+"',"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+","+str(RatingSum)+");"
-	return query1 + query2
+	#query1 = "INSERT INTO Movie (Name,Description,Cast,Director,Category,ReleaseDate,Rating,RunningTime, AgeRestriction,RatingCount,RatingSum)"
+	#query2 = "VALUES ('"+Name+"','"+Description+"','SACAR','"+Director+"','"+Category+"','"+ReleaseDate+"',"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+","+str(RatingSum)+");"
+	#return query1 + query2
+	query = """BEGIN
+	IF NOT EXISTS (SELECT Movie.Name FROM Movie 
+                   WHERE Movie.Name = 'XXX')                   
+	BEGIN
+		INSERT INTO Movie (Name,Description,Cast,Director,Category,ReleaseDate,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum) 
+		VALUES '"""+Name+"','"+Description+"','SACAR','"+Director+"','"+Category+"','"+ ReleaseDate+"',"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+","+str(RatingSum)+""");
+	END
+END"""
+	return query
 
 def insert_actor(soup):
 	string = "INSERT INTO Actor VALUES"
@@ -49,3 +58,10 @@ def insert_category(soup):
 	string = string + ";"
 	return string
 
+def relate_MovieActor():
+	query = "INSERT INTO MovieActor(MovieID,ActorID) SELECT MovieID, ActorID FROM Movie, Actor WHERE Movie.Name='X' AND Actor.Name='G';"
+
+def relate_MovieCategory():
+	query = "INSERT INTO MovieCategory(MovieID,CategoryID) SELECT MovieID, CategoryID FROM Movie, Category WHERE Movie.Name='X' AND Category.Name='Z';"
+
+print(insert_movie(Main_Soup))
