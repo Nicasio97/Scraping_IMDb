@@ -112,8 +112,6 @@ def print_all_queries(soup):
 	print(insert_movie(soup,Name)+"\n"+" "+"\n"+insert_actor(soup,actor_list)+"\n"+" "+"\n"+insert_category(soup,category_list)+"\n"""
 		+" "+"\n"+relate_MovieCategory(soup,Name,category_list)+"\n"+" "+"\n"+relate_MovieActor(soup,Name,actor_list))
 	
-#scraping_imdb.print_all(Secondary_Soup)
 
-print_all_queries(Secondary_Soup)
 
 
