@@ -1,5 +1,7 @@
+import requests
+import bs4
 def get_soup(link):
-	rec = requests.get("'"+link+"'")
+	rec = requests.get(link)
 	return bs4.BeautifulSoup(rec.content,'html.parser')
 
 def get_movie_name(soup):
