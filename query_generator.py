@@ -7,8 +7,12 @@ rec = requests.get('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNOQJNL
 Main_Soup = bs4.BeautifulSoup(rec.content,'html.parser') 
 # rec.content = rec.text
 
-def insert_movie(soup):
-	Name = scraping_imdb.get_movie_name(soup)
+def insert_movie(soup,movieName=None):
+	Name=""
+	if movieName is None:
+		Name = scraping_imdb.get_movie_name(soup)
+	else:
+		Name = movieName 
 	Description	= scraping_imdb.get_summary(soup)
 	Director = scraping_imdb.get_director(soup)
 	ReleaseDate	= scraping_imdb.get_year(soup)
@@ -22,14 +26,18 @@ def insert_movie(soup):
                    WHERE Movie.Name = '"""+Name+"""')                   
 	BEGIN
 		INSERT INTO Movie (Name,Description,Director,ReleaseDate,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum) 
-		VALUES ('"""+Name+"','"+Description+"','"+Director+"','"+ ReleaseDate+"',"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+",'"+str(RatingSum)+"""'');
+		VALUES ('"""+Name+"','"+Description+"','"+Director+"','"+ ReleaseDate+"',"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+",'"+str(RatingSum)+"""');
 	END
 END"""
 	return query
 
-def insert_actor(soup):
+def insert_actor(soup,actorList=None):
+	actor_list = []
 	query = "BEGIN" + "\n"	
-	actor_list = scraping_imdb.get_actors(soup)
+	if actorList is None:
+		actor_list = scraping_imdb.get_actors(soup)
+	else:
+		actor_list = actorList	
 	for actor in actor_list:		
 		string = "IF NOT EXISTS (SELECT Actor.Name FROM Actor WHERE Actor.Name = '"+actor+"') BEGIN INSERT INTO Actor VALUES ('"+actor+"') END" + "\n"
 		query = query + string							
@@ -37,18 +45,30 @@ def insert_actor(soup):
 	return query	
 
 
-def insert_category(soup):
+def insert_category(soup,categoryList=None):
+	category_list = []
 	query = "BEGIN" + "\n"
-	category_list = scraping_imdb.get_genres(soup)		
+	if categoryList is None:	
+		category_list = scraping_imdb.get_genres(soup)
+	else:
+		category_list = categoryList	
 	for category in category_list:		
 		string = "IF NOT EXISTS (SELECT Category.Name FROM Category WHERE Category.Name = '"+category+"') BEGIN INSERT INTO Category VALUES ('"+category+"') END" + "\n"
 		query = query + string					
 	query = query + "END;"
 	return query
 
-def relate_MovieActor(soup):
-	Name = scraping_imdb.get_movie_name(soup)
-	actor_list = scraping_imdb.get_actors(soup)	
+def relate_MovieActor(soup,movieName=None,actorList=None):
+	Name = ""
+	actor_list = []
+	if movieName is None:
+		Name = scraping_imdb.get_movie_name(soup)
+	else:
+		Name = movieName
+	if actorList is None:
+		actor_list = scraping_imdb.get_actors(soup)
+	else:
+		actor_list = actorList		
 	query = ""	
 	i = 1
 	for actor in actor_list:
@@ -60,9 +80,17 @@ def relate_MovieActor(soup):
 		i = i + 1			
 	return query
 
-def relate_MovieCategory(soup):
-	Name = scraping_imdb.get_movie_name(soup)
-	category_list = scraping_imdb.get_genres(soup)
+def relate_MovieCategory(soup,movieName=None,categoryList=None):
+	Name = ""
+	category_list = []
+	if movieName is None:
+		Name = scraping_imdb.get_movie_name(soup)
+	else:
+		Name = movieName
+	if categoryList is None:	
+		category_list = scraping_imdb.get_genres(soup)
+	else:
+		category_list = categoryList	
 	query = ""	
 	i = 1
 	for category in category_list:
@@ -75,6 +103,14 @@ def relate_MovieCategory(soup):
 	return query
 
 def print_all_queries(soup):
-	print(insert_movie(soup)+"\n"+" "+"\n"+insert_actor(soup)+"\n"+" "+"\n"+insert_category(soup)+"\n"+" "+"\n"+relate_MovieCategory(soup)+"\n"+" "+"\n"+relate_MovieActor(soup))
+	Name = scraping_imdb.get_movie_name(soup)
+	actor_list = scraping_imdb.get_actors(soup)
+	category_list = scraping_imdb.get_genres(soup)	
+	print(insert_movie(soup,Name)+"\n"+" "+"\n"+insert_actor(soup,actor_list)+"\n"+" "+"\n"+insert_category(soup,category_list)+"\n"""
+		+" "+"\n"+relate_MovieCategory(soup,Name,category_list)+"\n"+" "+"\n"+relate_MovieActor(soup,Name,actor_list))
 	
 print_all_queries(Main_Soup)
+
+
+
+
