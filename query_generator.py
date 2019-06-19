@@ -7,8 +7,11 @@ link = ('https://www.imdb.com/title/tt0110912/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=e3
 link2= ('https://www.imdb.com/title/tt4154796/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p='+
 	'ea4e08e1-c8a3-47b5-ac3a-75026647c16e&pf_rd_r=DG1G7TR5BQM8GNQBRM8Z&pf_rd_s=center' + 
 	'-1&pf_rd_t=15506&pf_rd_i=moviemeter&ref_=chtmvm_tt_4')
+MostPopularMovies=('https://www.imdb.com/chart/moviemeter?ref_=nv_mv_mpm')
 Main_Soup = scraping_imdb.get_soup(link)
-Secondary_Soup = scraping_imdb.get_soup(link2)	 
+Secondary_Soup = scraping_imdb.get_soup(link2)
+Third_Soup = scraping_imdb.get_soup(MostPopularMovies)
+
 
 def insert_movie(soup,movieName=None):
 	Name=""
@@ -112,6 +115,17 @@ def print_all_queries(soup):
 	print(insert_movie(soup,Name)+"\n"+" "+"\n"+insert_actor(soup,actor_list)+"\n"+" "+"\n"+insert_category(soup,category_list)+"\n"""
 		+" "+"\n"+relate_MovieCategory(soup,Name,category_list)+"\n"+" "+"\n"+relate_MovieActor(soup,Name,actor_list))
 	
-
-
-
+def extract_herf_list_from_table(soup,limit=None):
+	tdlist=[]
+	if limit is None:		
+		tdlist=soup.find_all('td', class_='titleColumn')
+	else:
+		tdlist=soup.find_all('td', class_='titleColumn',limit=limit)
+	link=''
+	hreflist=[]
+	i=0
+	for b in tdlist:
+		link = 'https://www.imdb.com' + tdlist[i].a['href']
+		hreflist.append(link)	
+		i = i + 1
+	return hreflist	
