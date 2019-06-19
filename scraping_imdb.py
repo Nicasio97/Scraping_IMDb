@@ -50,11 +50,15 @@ def get_rating_count(soup):
 		return s6.string.replace(",","")
 
 def get_summary(soup):
-	s7 = soup.find('div', class_='summary_text').string
-	if s7 is None:
-		return "None"
-	else:
-		return s7.strip()
+	s7 = soup.find('div', class_='summary_text')
+	s7 = s7.contents
+	string = ''
+	for a in range(len(s7)):
+		if type(s7[a]).__name__ == 'Tag':		
+			string = string + '"' +s7[a].string + '"'
+		else:	
+			string = string + s7[a].string
+	return string.strip()
 
 def get_director(soup):
 	s8 = soup.find_all('div', class_='credit_summary_item')
