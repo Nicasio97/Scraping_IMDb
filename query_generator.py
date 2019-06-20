@@ -101,4 +101,10 @@ def print_all_queries(soup):
 	category_list = scraping_imdb.get_genres(soup)	
 	print(insert_movie(soup,Name)+"\n"+" "+"\n"+insert_actor(soup,actor_list)+"\n"+" "+"\n"+insert_category(soup,category_list)+"\n"""
 		+" "+"\n"+relate_MovieCategory(soup,Name,category_list)+"\n"+" "+"\n"+relate_MovieActor(soup,Name,actor_list))
-	
+def unique_query(soup):
+	Name = scraping_imdb.get_movie_name(soup)
+	actor_list = scraping_imdb.get_actors(soup)
+	category_list = scraping_imdb.get_genres(soup)	
+	string = (insert_movie(soup,Name)+"\n"+" "+"\n"+insert_actor(soup,actor_list)+"\n"+" "+"\n"+insert_category(soup,category_list)+"\n"""
+		+" "+"\n"+relate_MovieCategory(soup,Name,category_list)+"\n"+" "+"\n"+relate_MovieActor(soup,Name,actor_list))	
+	return string

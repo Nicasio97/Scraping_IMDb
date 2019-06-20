@@ -12,9 +12,6 @@ Main_Soup = scraping_imdb.get_soup(link)
 Secondary_Soup = scraping_imdb.get_soup(link2)
 Third_Soup = scraping_imdb.get_soup(MostPopularMovies)
 
-query_generator.print_all_queries(Main_Soup)
-
-
-#doc = open('C:\\Users\\nicas\\Desktop\\insert_movies_query.sql','w')
-#doc.write()
+doc = open('C:\\Users\\nicas\\Desktop\\insert_movies_query.sql','w')
+doc.write(query_generator.unique_query(Main_Soup))
 
