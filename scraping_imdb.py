@@ -98,7 +98,20 @@ def print_all(soup):
 	for element in elementList:				
 		print(element)		
 
-
+def extract_herf_list_from_table(soup,limit=None):
+	tdlist=[]
+	if limit is None:		
+		tdlist=soup.find_all('td', class_='titleColumn')
+	else:
+		tdlist=soup.find_all('td', class_='titleColumn',limit=limit)
+	link=''
+	hreflist=[]
+	i=0
+	for b in tdlist:
+		link = 'https://www.imdb.com' + tdlist[i].a['href']
+		hreflist.append(link)	
+		i = i + 1
+	return hreflist	
 
 
 
