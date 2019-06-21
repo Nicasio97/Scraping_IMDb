@@ -9,7 +9,8 @@ def get_movie_name(soup):
 	if s1 is None:
 		return 'EMPTY'
 	else:
-		return s1.contents[0].strip()
+		s1 =s1.contents[0].strip()
+		return s1.replace("\'","\'\'")
 
 def get_year(soup):
 	s2 = soup.div.h1.a.contents[0]
@@ -57,15 +58,18 @@ def get_summary(soup):
 		if type(s7[a]).__name__ == 'Tag':		
 			string = string + '"' +s7[a].string + '"'
 		else:	
-			string = string + s7[a].string
-	return string.strip()
+			string = string + s7[a].string	
+	string = string.strip()
+	return string.replace("\'","\'\'")
 
 def get_director(soup):
 	s8 = soup.find_all('div', class_='credit_summary_item')
 	if s8 is None:
 		return 'EMPTY'
 	else:	
-		return s8[0].find('a').string
+		s8 = s8[0].find('a').string
+		return s8.replace("\'","\'\'")
+
 
 def get_actors(soup):
 	s9 = soup.find_all('div', class_='credit_summary_item')	
@@ -74,13 +78,15 @@ def get_actors(soup):
 	else:	
 		actors=[]
 		for link in s9[2].find_all('a'):
-			actors.append(link.string)
+			actors.append(link.string.replace("\'","\'\'"))
 		actors.pop()
 		return actors
 
 def get_restriction_age(soup):
 	s10 = soup.find('div', class_='title_wrapper')
 	if s10 is None:
+		return 'EMPTY'
+	elif s10.div.contents[0].strip() == '':
 		return 'EMPTY'
 	else:
 		return s10.div.contents[0].strip()
