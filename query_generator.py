@@ -5,15 +5,16 @@ def insert_movie(soup,movieName=None):
 	if movieName is None:
 		Name = scraping_imdb.get_movie_name(soup)
 	else:
-		Name = movieName 
+		Name = movieName 	
 	Description	= scraping_imdb.get_summary(soup)
 	Director = scraping_imdb.get_director(soup)
 	ReleaseDate	= scraping_imdb.get_year(soup)
-	Rating	= float(scraping_imdb.get_rating_value(soup))
+	Rating	= scraping_imdb.get_rating_value(soup)
 	RunningTime = scraping_imdb.get_duration(soup)
-	AgeRestriction	= scraping_imdb.get_restriction_age(soup)
-	RatingCount	= int(scraping_imdb.get_rating_count(soup))
-	RatingSum	= Rating * RatingCount
+	AgeRestriction	= scraping_imdb.get_restriction_age(soup)	
+	RatingCount = scraping_imdb.get_rating_count(soup)	
+	RatingSum = float(Rating) * int(RatingCount)
+	
 	query = """BEGIN
 	IF NOT EXISTS (SELECT Movie.Name FROM Movie 
                    WHERE Movie.Name = '"""+Name+"""')                   
@@ -101,6 +102,7 @@ def print_all_queries(soup):
 	category_list = scraping_imdb.get_genres(soup)	
 	print(insert_movie(soup,Name)+"\n"+" "+"\n"+insert_actor(soup,actor_list)+"\n"+" "+"\n"+insert_category(soup,category_list)+"\n"""
 		+" "+"\n"+relate_MovieCategory(soup,Name,category_list)+"\n"+" "+"\n"+relate_MovieActor(soup,Name,actor_list))
+
 def unique_query(soup):
 	Name = scraping_imdb.get_movie_name(soup)
 	actor_list = scraping_imdb.get_actors(soup)
