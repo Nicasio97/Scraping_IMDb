@@ -128,7 +128,3 @@ def extract_herf_list_from_table(soup,limit=None):
 		hreflist.append(link)	
 		i = i + 1
 	return hreflist	
-
-
-soup = get_soup('https://www.imdb.com/title/tt0110912/?ref_=nv_sr_1?ref_=nv_sr_1')
-print(get_poster_href(soup))
