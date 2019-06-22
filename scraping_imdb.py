@@ -98,6 +98,13 @@ def get_release_date(soup):
 	else:
 		return s11 
 
+def get_poster_href(soup):
+	s12 = soup.find('div', class_='poster').a['href']
+	if s12 is None:
+		return 'EMPTY'
+	else:
+		return 'https://www.imdb.com' + s12
+
 def get_all(soup,print_=False):
 	elementList=[get_movie_name(soup),get_year(soup),get_duration(soup),get_genres(soup),get_rating_value(soup),get_rating_count(soup),
 	get_summary(soup),get_director(soup),get_actors(soup),get_restriction_age(soup)]
@@ -123,4 +130,5 @@ def extract_herf_list_from_table(soup,limit=None):
 	return hreflist	
 
 
-
+soup = get_soup('https://www.imdb.com/title/tt0110912/?ref_=nv_sr_1?ref_=nv_sr_1')
+print(get_poster_href(soup))
