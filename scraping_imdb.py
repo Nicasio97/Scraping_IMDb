@@ -99,7 +99,7 @@ def get_release_date(soup):
 		return s11 
 
 def get_poster_href(soup):
-	s12 = soup.find('div', class_='poster').a['href']
+	s12 = soup.find('div', class_='poster').img['src']
 	if s12 is None:
 		return 'EMPTY'
 	else:
