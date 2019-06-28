@@ -31,12 +31,11 @@ DELETE FROM MovieCategory
 DELETE FROM MovieActor \n\n"""
 
 soup = scraping_imdb.get_soup('https://www.imdb.com/chart/moviemeter?ref_=nv_mv_mpm')
-links = scraping_imdb.extract_herf_list_from_table(soup, 20)
+links = scraping_imdb.extract_herf_list_from_table(soup, 5)
 string = ''
 for i in range(len(links)):
 	string = string + query_generator.unique_query(scraping_imdb.get_soup(links[(i-1)])) + '\n\n'
 
 doc = open('C:\\Users\\nicas\\Desktop\\insert_movies_query.sql','w')
 doc.write(oh_please + string)
-
 
