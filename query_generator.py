@@ -14,15 +14,17 @@ def insert_movie(soup,movieName=None):
 	AgeRestriction	= scraping_imdb.get_restriction_age(soup)	
 	RatingCount = scraping_imdb.get_rating_count(soup)	
 	RatingSum = float(Rating) * int(RatingCount)
-	
-	query = """BEGIN
-	IF NOT EXISTS (SELECT Movie.Name FROM Movie 
-                   WHERE Movie.Name = '"""+Name+"""')                   
-	BEGIN
-		INSERT INTO Movie (Name,Description,Director,ReleaseDate,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum) 
-		VALUES ('"""+Name+"','"+Description+"','"+Director+"','"+ ReleaseDate+"',"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+",'"+str(RatingSum)+"""');
-	END
-END"""
+	PosterLink = scraping_imdb.get_poster_href(soup)
+	query = ("BEGIN\n" +
+	"IF NOT EXISTS (SELECT Movie.Name FROM Movie\n" +
+    "\t\tWHERE Movie.Name = '"+Name+"')\n" +                   
+	"\tBEGIN\n" +
+	"\t\tINSERT INTO Movie (Name,Description,Director,ReleaseDate,\n" +
+	"\t\tPosterLink,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum)\n" + 
+	"\t\tVALUES ('"+Name+"','"+Description+"','"+Director+"','"+ ReleaseDate+"','"+PosterLink+"',\n" +
+	"\t\t\t"+str(Rating)+",'"+RunningTime+"','"+AgeRestriction+"',"+str(RatingCount)+",'"+str(RatingSum)+"');\n" +
+	"\tEND\n" +
+	"END\n") 
 	return query
 
 def insert_actor(soup,actorList=None):
@@ -33,7 +35,8 @@ def insert_actor(soup,actorList=None):
 	else:
 		actor_list = actorList	
 	for actor in actor_list:		
-		string = "IF NOT EXISTS (SELECT Actor.Name FROM Actor WHERE Actor.Name = '"+actor+"') BEGIN INSERT INTO Actor VALUES ('"+actor+"') END" + "\n"
+		string = ("IF NOT EXISTS (SELECT Actor.Name FROM Actor WHERE Actor.Name = '"+actor +
+			"') BEGIN INSERT INTO Actor VALUES ('"+actor+"') END" + "\n")
 		query = query + string							
 	query = query + "END;"
 	return query	
@@ -47,7 +50,8 @@ def insert_category(soup,categoryList=None):
 	else:
 		category_list = categoryList	
 	for category in category_list:		
-		string = "IF NOT EXISTS (SELECT Category.Name FROM Category WHERE Category.Name = '"+category+"') BEGIN INSERT INTO Category VALUES ('"+category+"') END" + "\n"
+		string = ("IF NOT EXISTS (SELECT Category.Name FROM Category WHERE Category.Name = '"+category+
+			"') BEGIN INSERT INTO Category VALUES ('"+category+"') END" + "\n")
 		query = query + string					
 	query = query + "END;"
 	return query
@@ -67,9 +71,11 @@ def relate_MovieActor(soup,movieName=None,actorList=None):
 	i = 1
 	for actor in actor_list:
 		if len(actor_list) != i:
-			string = "INSERT INTO MovieActor(MovieID,ActorID) SELECT MovieID, ActorID FROM Movie, Actor WHERE Movie.Name='"+Name+"'AND Actor.Name='"+actor+"';" + "\n"
+			string = ("INSERT INTO MovieActor(MovieID,ActorID) SELECT MovieID, ActorID " + 
+				"FROM Movie, Actor WHERE Movie.Name='"+Name+"'AND Actor.Name='"+actor+"';" + "\n")
 		else:
-			string = "INSERT INTO MovieActor(MovieID,ActorID) SELECT MovieID, ActorID FROM Movie, Actor WHERE Movie.Name='"+Name+"' AND Actor.Name='"+actor+"';"
+			string = ("INSERT INTO MovieActor(MovieID,ActorID) SELECT MovieID, ActorID " +
+				"FROM Movie, Actor WHERE Movie.Name='"+Name+"' AND Actor.Name='"+actor+"';")
 		query = query + string			
 		i = i + 1			
 	return query
@@ -89,9 +95,11 @@ def relate_MovieCategory(soup,movieName=None,categoryList=None):
 	i = 1
 	for category in category_list:
 		if len(category_list) != i:
-			string = "INSERT INTO MovieCategory(MovieID,CategoryID) SELECT MovieID, CategoryID FROM Movie, Category WHERE Movie.Name='"+Name+"'AND Category.Name='"+category+"';" + "\n"
+			string = ("INSERT INTO MovieCategory(MovieID,CategoryID) SELECT MovieID, CategoryID FROM"+
+				" Movie, Category WHERE Movie.Name='"+Name+"'AND Category.Name='"+category+"';" + "\n")
 		else:
-			string = "INSERT INTO MovieCategory(MovieID,CategoryID) SELECT MovieID, CategoryID FROM Movie, Category WHERE Movie.Name='"+Name+"' AND Category.Name='"+category+"';"
+			string = ("INSERT INTO MovieCategory(MovieID,CategoryID) SELECT MovieID, CategoryID FROM"+
+				" Movie, Category WHERE Movie.Name='"+Name+"' AND Category.Name='"+category+"';")
 		query = query + string			
 		i = i + 1			
 	return query
