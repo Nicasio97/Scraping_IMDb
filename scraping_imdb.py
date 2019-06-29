@@ -103,7 +103,7 @@ def get_poster_href(soup):
 	if s12 is None:
 		return 'EMPTY'
 	else:
-		return 'https://www.imdb.com' + s12
+		return s12
 
 def get_all(soup,print_=False):
 	elementList=[get_movie_name(soup),get_year(soup),get_duration(soup),get_genres(soup),get_rating_value(soup),get_rating_count(soup),

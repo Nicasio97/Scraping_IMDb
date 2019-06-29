@@ -16,7 +16,7 @@ IF NOT EXISTS (SELECT Movie.Name FROM Movie
 	BEGIN
 		INSERT INTO Movie (Name,Description,Director,ReleaseDate,
 		PosterLink,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum)
-		VALUES ('Avengers: Endgame','After the devastating events of "Avengers: Infinity War" (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos'' actions and restore balance to the universe.','Anthony Russo','2019','https://www.imdb.comhttps://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_UX182_CR0,0,182,268_AL_.jpg',
+		VALUES ('Avengers: Endgame','After the devastating events of "Avengers: Infinity War" (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos'' actions and restore balance to the universe.','Anthony Russo','2019','https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_UX182_CR0,0,182,268_AL_.jpg',
 			8.7,'3h 1min','PG-13',459772,'4000016.3999999994');
 	END
 END
@@ -48,7 +48,7 @@ IF NOT EXISTS (SELECT Movie.Name FROM Movie
 	BEGIN
 		INSERT INTO Movie (Name,Description,Director,ReleaseDate,
 		PosterLink,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum)
-		VALUES ('Murder Mystery','A New York cop and his wife go on a European vacation to reinvigorate the spark in their marriage, but end up getting framed and on the run for the death of an elderly billionaire.','Kyle Newacheck','2019','https://www.imdb.comhttps://m.media-amazon.com/images/M/MV5BNTA2YTI5YjUtZWI4Zi00NWQ5LWFiYmEtOTBmNTUyNDAwNjllXkEyXkFqcGdeQXVyNjIzNzM4NzA@._V1_UX182_CR0,0,182,268_AL_.jpg',
+		VALUES ('Murder Mystery','A New York cop and his wife go on a European vacation to reinvigorate the spark in their marriage, but end up getting framed and on the run for the death of an elderly billionaire.','Kyle Newacheck','2019','https://m.media-amazon.com/images/M/MV5BNTA2YTI5YjUtZWI4Zi00NWQ5LWFiYmEtOTBmNTUyNDAwNjllXkEyXkFqcGdeQXVyNjIzNzM4NzA@._V1_UX182_CR0,0,182,268_AL_.jpg',
 			6.0,'1h 37min','PG-13',38578,'231468.0');
 	END
 END
@@ -80,7 +80,7 @@ IF NOT EXISTS (SELECT Movie.Name FROM Movie
 	BEGIN
 		INSERT INTO Movie (Name,Description,Director,ReleaseDate,
 		PosterLink,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum)
-		VALUES ('Toy Story 4','When a new toy called "Forky" joins Woody and the gang, a road trip alongside old and new friends reveals how big the world can be for a toy.','Josh Cooley','2019','https://www.imdb.comhttps://m.media-amazon.com/images/M/MV5BMTYzMDM4NzkxOV5BMl5BanBnXkFtZTgwNzM1Mzg2NzM@._V1_UX182_CR0,0,182,268_AL_.jpg',
+		VALUES ('Toy Story 4','When a new toy called "Forky" joins Woody and the gang, a road trip alongside old and new friends reveals how big the world can be for a toy.','Josh Cooley','2019','https://m.media-amazon.com/images/M/MV5BMTYzMDM4NzkxOV5BMl5BanBnXkFtZTgwNzM1Mzg2NzM@._V1_UX182_CR0,0,182,268_AL_.jpg',
 			8.4,'1h 40min','G',33818,'284071.2');
 	END
 END
@@ -112,7 +112,7 @@ IF NOT EXISTS (SELECT Movie.Name FROM Movie
 	BEGIN
 		INSERT INTO Movie (Name,Description,Director,ReleaseDate,
 		PosterLink,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum)
-		VALUES ('Men in Black: International','The Men in Black have always protected the Earth from the scum of the universe. In this new adventure, they tackle their biggest threat to date: a mole in the Men in Black organization.','F. Gary Gray','2019','https://www.imdb.comhttps://m.media-amazon.com/images/M/MV5BMDZkODI2ZGItYTY5Yi00MTA4LWExY2ItM2ZmNjczYjM0NDg1XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_UX182_CR0,0,182,268_AL_.jpg',
+		VALUES ('Men in Black: International','The Men in Black have always protected the Earth from the scum of the universe. In this new adventure, they tackle their biggest threat to date: a mole in the Men in Black organization.','F. Gary Gray','2019','https://m.media-amazon.com/images/M/MV5BMDZkODI2ZGItYTY5Yi00MTA4LWExY2ItM2ZmNjczYjM0NDg1XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_UX182_CR0,0,182,268_AL_.jpg',
 			5.7,'1h 54min','PG-13',20963,'119489.1');
 	END
 END
@@ -144,7 +144,7 @@ IF NOT EXISTS (SELECT Movie.Name FROM Movie
 	BEGIN
 		INSERT INTO Movie (Name,Description,Director,ReleaseDate,
 		PosterLink,Rating,RunningTime,AgeRestriction,RatingCount,RatingSum)
-		VALUES ('Child''s Play','A mother gives her 13-year-old son a toy doll for his birthday, unaware of its more sinister nature.','Lars Klevberg','2019','https://www.imdb.comhttps://m.media-amazon.com/images/M/MV5BNTNlNjIxNjktOWUyMS00YWY5LWEwZGItMjZmODJlZWNiZGM2XkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
+		VALUES ('Child''s Play','A mother gives her 13-year-old son a toy doll for his birthday, unaware of its more sinister nature.','Lars Klevberg','2019','https://m.media-amazon.com/images/M/MV5BNTNlNjIxNjktOWUyMS00YWY5LWEwZGItMjZmODJlZWNiZGM2XkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
 			6.4,'1h 30min','R',6530,'41792.0');
 	END
 END
